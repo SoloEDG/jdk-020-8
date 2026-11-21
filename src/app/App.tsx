@@ -4,6 +4,11 @@ import { ApronMap, selectStand } from "../features/apron";
 import { FleetPanel, selectVehicle } from "../features/fleet";
 import { dispatchService } from "../features/services";
 import {
+  InventoryPanel,
+  SupplyControls,
+  HoldingPanel,
+} from "../features/materials";
+import {
   SessionBar,
   ScoreStrip,
   changeSpeed,
@@ -75,6 +80,11 @@ export function App() {
               state={state}
               onSelect={(id) => setState((s) => selectVehicle(s, id))}
             />
+            <InventoryPanel state={state} />
+            <div className="supply-row">
+              <SupplyControls state={state} onChange={setState} />
+              <HoldingPanel state={state} onChange={setState} />
+            </div>
           </div>
           <Inspector
             state={state}

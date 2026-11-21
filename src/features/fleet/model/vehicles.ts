@@ -18,6 +18,7 @@ export function initialVehicles(): Vehicle[] {
         target: p,
         progress: 0,
         tripDuration: 10,
+        cargo: 0,
       });
     }
   return result;

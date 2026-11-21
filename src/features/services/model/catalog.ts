@@ -1,4 +1,5 @@
 import type { Flight, Service, ServiceKind } from "../../../shared/types";
+import { serviceDemand } from "../../materials/model/catalog";
 export const serviceCatalog: Record<
   ServiceKind,
   {
@@ -40,6 +41,8 @@ export function initialServices(flights: Flight[]): Service[] {
       status: "pending",
       progress: 0,
       duration: serviceCatalog[kind].duration * (f.size === "wide" ? 1.3 : 1),
+      demand: serviceDemand(kind, f),
+      consumed: 0,
     })),
   );
 }

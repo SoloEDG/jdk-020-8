@@ -1201,3 +1201,391 @@ footer > span:last-child {
     transition: none !important;
   }
 }
+
+/* ===== 物资与补给 ===== */
+.inventory-panel,
+.supply-panel,
+.holding-panel {
+  background: #faf9f3;
+  border: 1px solid #dedfd2;
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 20px;
+}
+.inventory-panel .section-heading h2,
+.supply-panel .section-heading h2,
+.holding-panel .section-heading h2 {
+  font-size: 14px;
+}
+.section-heading h2 small {
+  display: block;
+  font-size: 9px;
+  font-weight: 400;
+  color: #94a18e;
+  margin-top: 3px;
+}
+.ledger-badge {
+  font-size: 10px;
+  padding: 5px 9px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+.ledger-badge.ok {
+  background: #e2ede2;
+  color: #4c7a5b;
+}
+.ledger-badge.bad {
+  background: #f6ddd2;
+  color: #b6533a;
+}
+.inventory-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.material-card {
+  border: 1px solid #dddfd1;
+  background: #fbfaf5;
+  border-radius: 7px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.material-card.stockout {
+  border-color: #d7805f;
+  background: #fdf3ec;
+}
+.material-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+.material-icon {
+  font-size: 21px;
+  line-height: 1;
+}
+.material-head strong {
+  font-size: 11px;
+  display: block;
+}
+.material-head div > span {
+  display: block;
+  font-size: 8px;
+  color: #8a9582;
+  margin-top: 2px;
+  line-height: 1.5;
+}
+.stockout-flag {
+  font-style: normal;
+  margin-left: auto;
+  font-size: 8px;
+  color: #fff;
+  background: #c8693f;
+  border-radius: 10px;
+  padding: 3px 7px;
+  white-space: nowrap;
+}
+.stock-now strong {
+  font: 600 20px "Barlow Condensed", sans-serif;
+  color: #2c4740;
+}
+.stock-now strong small {
+  font-size: 10px;
+  color: #94a18e;
+  font-weight: 400;
+}
+.stock-now span {
+  display: block;
+  font-size: 8px;
+  color: #9aa28e;
+  margin-top: 2px;
+}
+.stock-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 8px;
+}
+.stock-bar-row {
+  display: grid;
+  grid-template-columns: 48px 1fr 34px;
+  align-items: center;
+  gap: 7px;
+  font-size: 8px;
+  color: #7e8876;
+}
+.stock-bar-row b {
+  font-size: 9px;
+  text-align: right;
+  color: #46574c;
+}
+.stock-bar {
+  height: 6px;
+  background: #e9ebdd;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.stock-bar i {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s;
+}
+.material-foot {
+  border-top: 1px solid #ececdf;
+  padding-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.stockout-text {
+  font-size: 9px;
+  color: #b6533a;
+  line-height: 1.6;
+}
+.healthy-text {
+  font-size: 9px;
+  color: #5e8065;
+  line-height: 1.6;
+}
+.ledger-line {
+  font-family: monospace;
+  font-size: 8px;
+  color: #9aa28e;
+}
+
+.supply-row {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 16px;
+  align-items: start;
+}
+.supply-kind-tabs {
+  display: flex;
+  gap: 7px;
+  margin-bottom: 14px;
+}
+.supply-kind-tabs button {
+  flex: 1;
+  border: 1px solid #dce0cd;
+  background: #f2f3e9;
+  border-radius: 6px;
+  padding: 9px 8px;
+  font-size: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.supply-kind-tabs button.chosen {
+  border-color: #d49759;
+  background: #fff5e4;
+}
+.supply-kind-tabs em {
+  font-style: normal;
+  font-size: 8px;
+  color: #b5996e;
+}
+.supply-kind-tabs em.idle {
+  color: #5e8065;
+}
+.supply-form {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+.supply-field span {
+  display: block;
+  font-size: 9px;
+  color: #8a9582;
+  margin-bottom: 5px;
+}
+.supply-field select,
+.supply-field input {
+  width: 100%;
+  border: 1px solid #d4d8c6;
+  border-radius: 5px;
+  background: #fffdf6;
+  padding: 9px 10px;
+  font: inherit;
+  font-size: 11px;
+  color: #2c4740;
+}
+.supply-modes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.supply-modes button {
+  border: 1px solid #dce0cd;
+  background: #f2f3e9;
+  border-radius: 6px;
+  padding: 10px;
+  font-size: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.supply-modes button.chosen {
+  border-color: #d49759;
+  background: #fff5e4;
+}
+.supply-modes small {
+  font-size: 8px;
+  color: #94a18e;
+}
+.supply-eta {
+  font-size: 9px;
+  color: #7e8876;
+  line-height: 1.7;
+}
+.supply-eta em {
+  font-style: normal;
+  color: #b6533a;
+  display: block;
+}
+.supply-actions {
+  display: flex;
+  gap: 8px;
+}
+.supply-actions button {
+  flex: 1;
+  justify-content: center;
+}
+.supply-fleet {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-top: 1px solid #ececdf;
+  padding-top: 12px;
+}
+.supply-row-status,
+.supply-row em {
+  font-size: 9px;
+  color: #94a18e;
+  font-style: normal;
+}
+.supply-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  padding: 6px 8px;
+  border-radius: 5px;
+  background: #f3f4ea;
+}
+.supply-row b {
+  margin-left: auto;
+  font-size: 10px;
+}
+.supply-row b small {
+  color: #94a18e;
+  font-weight: 400;
+}
+.recall-tag {
+  color: #b6533a !important;
+  font-weight: 600;
+}
+.holding-empty {
+  font-size: 10px;
+  color: #94a18e;
+  padding: 18px 0;
+  text-align: center;
+}
+.holding-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.holding-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 10px;
+  border: 1px solid #e6d3c4;
+  background: #fdf4ee;
+  border-radius: 6px;
+  font-size: 10px;
+}
+.holding-id {
+  font-family: monospace;
+  font-weight: 600;
+  color: #b6533a;
+}
+.holding-row strong small {
+  font-weight: 400;
+  color: #94a18e;
+}
+.holding-row em {
+  font-style: normal;
+  font-size: 8px;
+  color: #9aa28e;
+  margin-left: auto;
+}
+button.small {
+  padding: 7px 10px;
+  font-size: 9px;
+}
+
+/* 任务物资行与等待续供状态 */
+.material-line {
+  font-size: 8px;
+  color: #7e8876;
+  margin-top: 5px;
+  line-height: 1.6;
+}
+.material-line em {
+  font-style: normal;
+  color: #b6533a;
+}
+.material-line.short {
+  color: #b6533a;
+}
+.service-task.waiting {
+  background: #fdf3ec;
+  border-radius: 6px;
+  padding-left: 6px;
+  padding-right: 6px;
+}
+button.dispatch.cancel {
+  color: #b6533a;
+  border-color: #e6d3c4;
+  background: #fdf4ee;
+}
+.fleet-card .cargo-chip {
+  position: absolute;
+  right: 6px;
+  bottom: 5px;
+  font-size: 8px;
+  background: #e7ebdf;
+  color: #4c6a54;
+  border-radius: 9px;
+  padding: 2px 6px;
+}
+.fleet-card {
+  position: relative;
+}
+.fleet-card.waiting {
+  border-color: #d7805f;
+}
+
+/* 地图上的补给车与机位缓存 */
+.supply-marker .supply-tag {
+  font: 600 8px "Barlow Condensed", sans-serif;
+  fill: #293f46;
+  letter-spacing: 0.5px;
+}
+.cache-qty {
+  font: 600 7px "Barlow Condensed", sans-serif;
+  fill: #fff;
+}
+@media (max-width: 1180px) {
+  .inventory-grid {
+    grid-template-columns: 1fr;
+  }
+  .supply-row {
+    grid-template-columns: 1fr;
+  }
+}

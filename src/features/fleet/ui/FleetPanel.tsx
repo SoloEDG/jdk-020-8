@@ -1,5 +1,6 @@
 import type { Shift } from "../../../shared/types";
 import { vehicleLabels, vehicleColors } from "../lib/routing";
+import { materialCatalog } from "../../materials/index";
 export function FleetPanel({
   state,
   onSelect,
@@ -7,10 +8,12 @@ export function FleetPanel({
   state: Shift;
   onSelect: (id: string) => void;
 }) {
-  const labels = {
+  const labels: Record<string, string> = {
     idle: "待命",
+    loading: "装车中",
     travel: "前往机位",
     working: "作业中",
+    waiting: "等待续供",
     returning: "返回车场",
   };
   return (
@@ -26,12 +29,12 @@ export function FleetPanel({
             </small>
           </h2>
         </div>
-        <span className="fleet-hint">选择车辆后派遣 · 点击切换</span>
+        <span className="fleet-hint">选择车辆后派遣 · 车载数量实时显示</span>
       </div>
       <div className="fleet-grid">
         {state.vehicles.map((v) => (
           <button
-            className={`fleet-card ${state.selectedVehicleId === v.id ? "chosen" : ""}`}
+            className={`fleet-card ${state.selectedVehicleId === v.id ? "chosen" : ""} ${v.status}`}
             key={v.id}
             onClick={() => onSelect(v.id)}
             data-testid={`vehicle-${v.id}`}
@@ -50,6 +53,11 @@ export function FleetPanel({
               <i />
               {labels[v.status]}
             </em>
+            {v.cargo > 0 && (
+              <b className="cargo-chip">
+                {v.cargo} {materialCatalog[v.kind].unit}
+              </b>
+            )}
           </button>
         ))}
       </div>

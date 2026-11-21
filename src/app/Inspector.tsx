@@ -58,14 +58,20 @@ export function Inspector({
               state.services.filter(
                 (t) =>
                   t.flightId === f.id &&
-                  (t.status === "travel" || t.status === "working"),
+                  (t.status === "travel" ||
+                    t.status === "working" ||
+                    t.status === "waiting"),
               ).length
             }{" "}
             / 2 占用
           </b>
         </div>
       )}
-      <ServicePanel state={state} onDispatch={onDispatch} />
+      <ServicePanel
+        state={state}
+        onDispatch={onDispatch}
+        onChange={onChange}
+      />
       <button
         className="primary depart-button"
         data-testid="depart"

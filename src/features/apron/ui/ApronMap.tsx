@@ -1,6 +1,12 @@
 import type { Shift } from "../../../shared/types";
 import { occupiedFlight, compatibleStand } from "../lib/geometry";
 import { Aircraft } from "./Aircraft";
+import {
+  materialCatalog,
+  materialKinds,
+  cacheAt,
+  supplyLabels,
+} from "../../materials/index";
 interface Props {
   state: Shift;
   onStand: (id: string) => void;
@@ -189,6 +195,34 @@ export function ApronMap({ state, onStand, onFlight }: Props) {
               >
                 {stand.id} {stand.size === "wide" ? "W" : ""}
               </text>
+              {materialKinds.some((k) => cacheAt(state, stand.id, k) > 0) && (
+                <g className="cache-dots">
+                  {materialKinds.map((k, i) => {
+                    const q = cacheAt(state, stand.id, k);
+                    if (q <= 0) return null;
+                    return (
+                      <g key={k}>
+                        <circle
+                          cx={stand.x - 24 + i * 24}
+                          cy={stand.y - 66}
+                          r="7"
+                          fill={materialCatalog[k].color}
+                          stroke="#f3f0df"
+                          strokeWidth="1.2"
+                        />
+                        <text
+                          x={stand.x - 24 + i * 24}
+                          y={stand.y - 62.5}
+                          textAnchor="middle"
+                          className="cache-qty"
+                        >
+                          {q >= 1000 ? `${Math.round(q / 100) / 10}k` : q}
+                        </text>
+                      </g>
+                    );
+                  })}
+                </g>
+              )}
               {f && (
                 <text
                   x={stand.x}
@@ -264,6 +298,45 @@ export function ApronMap({ state, onStand, onFlight }: Props) {
                 className="moving-ring"
               />
             )}
+          </g>
+        ))}
+        {state.supplyVehicles.map((sv) => (
+          <g
+            key={sv.id}
+            transform={`translate(${sv.position.x} ${sv.position.y})`}
+            className="vehicle-marker supply-marker"
+            data-testid={`supply-vehicle-${sv.id}`}
+          >
+            <rect
+              x="-11"
+              y="-7"
+              width="24"
+              height="15"
+              rx="3"
+              fill={materialCatalog[sv.kind].color}
+              stroke="#293f46"
+              strokeWidth="1.5"
+              strokeDasharray="4 3"
+            />
+            <rect x="7" y="-5" width="5" height="10" rx="1" fill="#e5e9df" />
+            <circle cx="-6" cy="9" r="2.2" fill="#3a4644" />
+            <circle cx="8" cy="9" r="2.2" fill="#3a4644" />
+            <text y="-11" textAnchor="middle" className="supply-tag">
+              {sv.cargo > 0 ? `${sv.id} · ${sv.cargo}` : sv.id}
+            </text>
+            {sv.status !== "idle" && (
+              <circle
+                r="19"
+                fill="none"
+                stroke="#293f46"
+                strokeOpacity=".45"
+                className="moving-ring"
+              />
+            )}
+            <title>
+              {sv.id} · {supplyLabels[sv.status]} · 车载 {sv.cargo}{" "}
+              {materialCatalog[sv.kind].unit}
+            </title>
           </g>
         ))}
         <g transform="translate(880 60)">
